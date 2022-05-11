@@ -3,12 +3,12 @@ import string
 # Alphabet
 alpha = string.ascii_lowercase
 
-dit = "."
-dahs = "-"
 space_min = "SSS"
 space_maj = "SMJ       "
 twin_space = "T"
-book = {
+
+# TODO:2, Morse Code dictionary
+BOOK = {
     '1': '. - - - -',
     '2': '. . - - -',
     '3': '. . . - -',
@@ -47,8 +47,7 @@ book = {
     ("Y", "y"): "- . - -",
     ("Z", "z"): "- - . ."
 }
-
-
+game_on = True
 def get_morse(word):
     '''
     Input: String from user
@@ -63,7 +62,7 @@ def get_morse(word):
             code.append(space_maj)
             previous_letter = space_maj
             continue
-        for k, v in book.items():
+        for k, v in BOOK.items():
             if character in k:
                 if character == previous_letter:
                     # if character is the same as previous letter add twin space then new letter
@@ -90,19 +89,34 @@ def get_morse(word):
     return code
 
 
-code = get_morse('sos')
-
-print(code)
-
 # TODO:1, User Input and response
-# a = input('Please provide a String to convert?')
-# print(a)
+while game_on:
+    user_input = str(input('Please provide a String to convert?\n'))
+    print(user_input)
 
-# TODO:2, Morse Code dictionary
 
+    # TODO:3, Converter functionality
+    encoded_message = get_morse(user_input)
 
-# TODO:3, Converter functionality
+    # TODO:4, Output Morse Code
+    empty_string = ''
+    print(empty_string.join(encoded_message))
 
-# TODO:4, Output Morse Code
+    # TODO:5,
+    valid_response = False
+    while valid_response == False:
 
-# TODO:5,
+        response = input('Would you like to encode another message?\nType (Y/N)\n').lower()
+
+        if response == 'n':
+            game_on = False
+            valid_response = True
+            print('Goodbye')
+            break
+        elif response == 'y':
+            valid_response = True
+            break
+
+        else:
+            continue
+
