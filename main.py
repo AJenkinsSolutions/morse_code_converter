@@ -1,6 +1,6 @@
 import string
 
-#Alphabet
+# Alphabet
 alpha = string.ascii_lowercase
 
 dit = "."
@@ -9,12 +9,44 @@ space_min = "SSS"
 space_maj = "SMJ       "
 twin_space = "T"
 book = {
-    ("A","a") : ". - ",
-    ("B", "b") : "- . . . ",
-    ("C", "c") : "- . - ."
-    }
-
-
+    '1': '. - - - -',
+    '2': '. . - - -',
+    '3': '. . . - -',
+    '4': '. . . . -',
+    '5': '. . . . .',
+    '6': '- . . . .',
+    '7': '- - . . .',
+    '8': '- - - . .',
+    '9': '- - - - .',
+    '0': '- - - - -',
+    '@': '. - - . - .',
+    ("A", "a"): ". - ",
+    ("B", "b"): "- . . . ",
+    ("C", "c"): "- . - .",
+    ("D", "d"): "- . .",
+    ("E", "e"): ".",
+    ("F", "f"): ". . - .",
+    ("G", "g"): "- - .",
+    ("H", "h"): ". . . .",
+    ("I", "i"): ". .",
+    ("J", "j"): ". - - -",
+    ("K", "k"): "- . -",
+    ("L", "l"): ". - . . ",
+    ("M", "m"): "- -",
+    ("N", "n"): "- .",
+    ("O", "o"): "- - -",
+    ("P", "p"): ". - - .",
+    ("Q", "q"): "- - . -",
+    ("R", "r"): ". - .",
+    ("S", "s"): ". . .",
+    ("T", "t"): "-",
+    ("U", "u"): ". . -",
+    ("V", "v"): ". . . -",
+    ("W", "w"): ". - -",
+    ("X", "x"): "- . . -",
+    ("Y", "y"): "- . - -",
+    ("Z", "z"): "- - . ."
+}
 
 
 def get_morse(word):
@@ -27,25 +59,25 @@ def get_morse(word):
     previous_letter = None
     for character in word:
         if character == ' ':
-            #If there is a space between Words in our string we add a 'Major space' then break from curretn iteration
+            # If there is a space between Words in our string we add a 'Major space' then break from curretn iteration
             code.append(space_maj)
             previous_letter = space_maj
             continue
         for k, v in book.items():
             if character in k:
                 if character == previous_letter:
-                    #if character is the same as previous letter add twin space then new letter
+                    # if character is the same as previous letter add twin space then new letter
                     code.append(twin_space)
                     code.append(v)
                     continue
-                #After weve got the correct character we add 'minor space' after
+                # After weve got the correct character we add 'minor space' after
                 if len(code) == 0:
-                    #if this is the 1st iteration dont put a space
+                    # if this is the 1st iteration dont put a space
                     code.append(v)
                     previous_letter = character
                     continue
                 elif previous_letter == space_maj:
-                    #If the last letter was a major space dont put a minor space
+                    # If the last letter was a major space dont put a minor space
                     code.append(v)
                     previous_letter = character
                     continue
@@ -58,24 +90,19 @@ def get_morse(word):
     return code
 
 
-code = get_morse('')
+code = get_morse('sos')
 
 print(code)
 
-
-
-
-#TODO:1, User Input and response
+# TODO:1, User Input and response
 # a = input('Please provide a String to convert?')
 # print(a)
 
-#TODO:2, Morse Code dictionary
+# TODO:2, Morse Code dictionary
 
 
+# TODO:3, Converter functionality
 
+# TODO:4, Output Morse Code
 
-#TODO:3, Converter functionality
-
-#TODO:4, Output Morse Code
-
-#TODO:5,
+# TODO:5,
