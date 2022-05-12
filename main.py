@@ -1,12 +1,13 @@
-print("File one __name__ is set to: {}" .format(__name__))
-
 def main():
-    #CONSTANTS
-    MINOR_SPACE = "SSS"
-    MAJOR_SPACE = "SMJ       "
-    TWIN_SPACE = "T"
 
-    #MORSE CODE DICTIONARY
+    programme_active = True
+
+    # CONSTANTS
+    MINOR_SPACE = "   "
+    MAJOR_SPACE = "          "
+    TWIN_SPACE = " "
+
+    # MORSE CODE DICTIONARY
     BOOK = {
         '1': '. - - - -',
         '2': '. . - - -',
@@ -47,79 +48,111 @@ def main():
         ("Z", "z"): "- - . ."
     }
 
-    #FUCNTIONS
+    # FUNCTIONS
     def get_morse(word):
         '''
         Input: String from user
-        Compares letters in string to keyt value pairs of a dictionary
+        Compares letters in string to key, value pairs of a dictionary containing the morse encoded_letters conversions
         Output: Morse_code equivalent
         '''
-        code = []
+
+        encoded_letters = []
         previous_letter = None
         for character in word:
+
             if character == ' ':
-                # If there is a space between Words in our string we add a 'Major space' then break from curretn iteration
-                code.append(MAJOR_SPACE)
+                # If there is a space between Words in our string we add a 'Major space' then break from current
+                # iteration
+                encoded_letters.append(MAJOR_SPACE)
                 previous_letter = MAJOR_SPACE
                 continue
+
             for k, v in BOOK.items():
                 if character in k:
                     if character == previous_letter:
                         # if character is the same as previous letter add twin space then new letter
-                        code.append(TWIN_SPACE)
-                        code.append(v)
+                        encoded_letters.append(TWIN_SPACE)
+                        encoded_letters.append(v)
                         continue
                     # After weve got the correct character we add 'minor space' after
-                    if len(code) == 0:
+                    if len(encoded_letters) == 0:
                         # if this is the 1st iteration dont put a space
-                        code.append(v)
+                        encoded_letters.append(v)
                         previous_letter = character
                         continue
                     elif previous_letter == MAJOR_SPACE:
                         # If the last letter was a major space dont put a minor space
-                        code.append(v)
+                        encoded_letters.append(v)
                         previous_letter = character
                         continue
                     else:
-                        # if its not the first iteration. if the previous letter is not the same, if the current letter is not a space, if the preivous letter is not a major space
-                        code.append(MINOR_SPACE)
-                        code.append(v)
+                        # if its not the first iteration. if the previous letter is not the same, if the current
+                        # letter is not a space, if the preivous letter is not a major space
+                        encoded_letters.append(MINOR_SPACE)
+                        encoded_letters.append(v)
                         previous_letter = character
                         continue
-        return code
+        return encoded_letters
 
-    #GAME ON CONDITON
-    game_on = True
-
-    #User Input and response
-    while game_on:
-        user_input = str(input('Please provide a String to convert?\n'))
-        print(user_input)
-
-        #Converter functionality
-        encoded_message = get_morse(user_input)
-
-        #Output Morse Code
+    def output(code):
+        '''
+        Takes the encoded letters as a listand returns encoded message string
+        :param code: The encoded message list
+        :return: String of encoded messge
+        '''
         empty_string = ''
-        print(empty_string.join(encoded_message))
+        return empty_string.join(encoded_message)
+
+    def user_input():
+        response = str(input('Please provide a String to convert?\n'))
+        return response
+
+    def exit_input():
+        response = input('Would you like to encode another message?\nType (Y/N)\n').lower()
+        return response
+
+    WELCOME_MESSAGE = '''
+    +-+-+-+-+-+ +-+-+-+-+ +-+-+-+-+-+-+-+
+    |M|o|r|s|e| |C|o|d|e| |E|n|c|o|d|e|r|
+    +-+-+-+-+-+ +-+-+-+-+ +-+-+-+-+-+-+-+
+    '''
+
+    GOODBYE_MESSAGE = '''
+    +-+-+-+-+-+-+-+
+    |G|o|o|d|B|y|e|
+    +-+-+-+-+-+-+-+
+    '''
+
+    print(WELCOME_MESSAGE)
+    print('Welcome to Morse Code Encoder !! ')
+
+    while programme_active:
+
+        user_response = user_input()
+        # Converter functionality
+        encoded_message = get_morse(user_response)
+        # Output Morse Code
+        morse_code_message = output(encoded_message)
+        print(morse_code_message)
 
         # Program Exit
         valid_response = False
-        while valid_response == False:
+        while not valid_response:
+            exit_response = exit_input()
 
-            response = input('Would you like to encode another message?\nType (Y/N)\n').lower()
-
-            if response == 'n':
-                game_on = False
+            if exit_response == 'n':
+                programme_active = False
                 valid_response = True
-                print('Goodbye')
-                break
-            elif response == 'y':
-                valid_response = True
+                print('Thank you for using Morse Code Converter')
+                print(GOODBYE_MESSAGE)
                 break
 
+            elif exit_response == 'y':
+                valid_response = True
+                break
             else:
                 continue
+
 
 if __name__ == '__main__':
     main()
